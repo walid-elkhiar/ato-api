@@ -1,0 +1,36 @@
+package com.ato.backendapi.entities;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import java.util.List;
+
+@Entity @AllArgsConstructor @NoArgsConstructor @Data
+public class Profil {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idProfil;
+    private String designation;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "idProfil")
+//    private List<Utilisateurs> utilisateurs;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "idProfil")
+//    private List<Habilitation> habilitations;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "profil", cascade = CascadeType.ALL)
+    private List<SousCodeTraitement> sousCodeTraitement;
+
+//    public void removeUtilisateurs() {
+//        this.utilisateurs.clear();
+//    }
+//    public void removeHabilitations() {
+//        this.habilitations.clear();
+//    }
+    public void removeSousCodeTraitements() {
+        this.sousCodeTraitement.clear();
+    }
+}
